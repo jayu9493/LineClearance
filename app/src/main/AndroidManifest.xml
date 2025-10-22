@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS"
+        tools:ignore="SmsAndCallLogPolicy" />
 
     <application
         android:allowBackup="true"
@@ -15,17 +16,17 @@
         android:theme="@style/Theme.LineClearance">
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.LineClearance">
+            android:exported="false"
+            android:theme="@style/Theme.LineClearance" />
+        <activity
+            android:name=".SubstationActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SubstationActivity"
-            android:exported="false" />
         <activity
             android:name=".FeederActivity"
             android:exported="false" />
