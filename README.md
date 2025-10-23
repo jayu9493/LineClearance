@@ -57,4 +57,4 @@ We welcome contributions! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) for 
 
 ## 📄 License
 
-This project is licensed under the MIT License. (Note: A `LICENSE` file should be added to the repository).
+This project is licensed under the MIT License.
