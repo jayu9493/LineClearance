@@ -2,4 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- PGVCL Theme Colors -->
+    <color name="pgvcl_primary">#D81B60</color>
+    <color name="pgvcl_primary_dark">#A00037</color>
+    <color name="pgvcl_accent">#F8BBD0</color>
+    <color name="pgvcl_background">#FCE4EC</color>
 </resources>

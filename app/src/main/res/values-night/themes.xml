@@ -1,7 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.LineClearance" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <!-- Base application theme, for dark theme. -->
+    <style name="Theme.LineClearance" parent="Base.Theme.LineClearance">
+        <!-- In dark mode, we can use a slightly different primary color if needed -->
+        <item name="colorPrimary">@color/pgvcl_primary_dark</item>
+        <item name="colorPrimaryVariant">@color/pgvcl_primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 </resources>

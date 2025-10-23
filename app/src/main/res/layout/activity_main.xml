@@ -4,25 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFEFEF"
+    android:background="@color/pgvcl_background"
     tools:context=".MainActivity">
 
+    <!--
     <ImageView
         android:id="@+id/logo"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@drawable/pgvcl_logo" />
+    -->
 
     <TextView
         android:id="@+id/app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="80dp"
         android:text="Line Clearance"
+        android:textColor="@color/pgvcl_primary_dark"
         android:textSize="24sp"
         android:textStyle="bold" />
 
@@ -73,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="Login"
+                android:backgroundTint="@color/pgvcl_primary"
                 android:textSize="18sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
