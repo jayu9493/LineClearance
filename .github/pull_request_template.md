@@ -1,3 +1,16 @@
+<!-- Describe the big picture of your changes here to communicate to the maintainers why we should accept this PR. -->
+
+## Summary
+
+What does this PR change? Provide a short description and the rationale.
+
+## Checklist
+- [ ] My code follows the project style
+- [ ] I have added tests where applicable
+- [ ] I have updated documentation where applicable
+
+## Related issues
+Fixes # (issue)
 ## Description
 Please include a summary of the change and which issue is fixed. Include relevant motivation and context.
 

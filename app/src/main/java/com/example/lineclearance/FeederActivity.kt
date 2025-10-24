@@ -5,17 +5,22 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lineclearance.databinding.ActivityFeederBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FeederActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFeederBinding
+    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFeederBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        db = AppDatabase.getDatabase(this)
 
         binding.feederRecyclerview.layoutManager = LinearLayoutManager(this)
 
@@ -24,9 +29,20 @@ class FeederActivity : AppCompatActivity() {
         val phoneNumber = getPhoneNumberForSubstation(substationName)
 
         val adapter = FeederAdapter(feeders) { feeder ->
-            val message = "Line clearance permit request for ${feeder.name} in ${feeder.substationName}"
+            // Run the database insert on a background thread to prevent crash
+            lifecycleScope.launch(Dispatchers.IO) {
+                val permit = LineClearancePermit(
+                    feederName = feeder.name,
+                    substationName = feeder.substationName,
+                    status = "Requested"
+                )
+                db.lineClearancePermitDao().insert(permit)
+            }
+
+            // Send the SMS
+            val message = "Please give LC of ${feeder.name} feeder for the work of jumper work from S B Kuvad"
             val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("smsto:$phoneNumber") // Use the specific phone number
+                data = Uri.parse("smsto:$phoneNumber")
                 putExtra("sms_body", message)
             }
             if (intent.resolveActivity(packageManager) != null) {
@@ -38,7 +54,7 @@ class FeederActivity : AppCompatActivity() {
         binding.feederRecyclerview.adapter = adapter
     }
 
-    private fun getPhoneNumberForSubstation(substationName: String): String {
+    private fun getPhoneNumberForSubstation(substationName: String): String { 
         return when (substationName) {
             "PATANVAV" -> "9909975777"
             "MOTIMAR" -> "9909975772"
@@ -46,11 +62,10 @@ class FeederActivity : AppCompatActivity() {
             "BHADER" -> "9081600377"
             "KALANA" -> "8160402913"
             "MURAKHAI" -> "9327119856"
-            // Substations without provided numbers
-            "BANTIYA" -> "1111111111" // Placeholder
-            "UPLETA" -> "6666666666" // Placeholder
-            "TANASAVA" -> "7777777777" // Placeholder
-            else -> "" // Default number or empty
+            "BANTIYA" -> "1111111111"
+            "UPLETA" -> "6666666666"
+            "TANASAVA" -> "7777777777"
+            else -> ""
         }
     }
 

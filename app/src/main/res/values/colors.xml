@@ -8,4 +8,7 @@
     <color name="pgvcl_primary_dark">#A00037</color>
     <color name="pgvcl_accent">#F8BBD0</color>
     <color name="pgvcl_background">#FCE4EC</color>
+
+    <!-- Dashboard Theme Colors -->
+    <color name="dashboard_green">#2E7D32</color>
 </resources>

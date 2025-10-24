@@ -1,3 +1,8 @@
+# Security
+
+If you discover a security vulnerability, please responsibly disclose it by opening a private issue or contacting the maintainers by email (see repository profile). Avoid public disclosure until the issue is fixed.
+
+For non-security issues, please open a regular GitHub issue.
 # Security Policy
 
 ## Supported Versions

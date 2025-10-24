@@ -20,9 +20,12 @@ class MainActivity : AppCompatActivity() {
             val email = binding.email.text.toString()
             val password = binding.password.text.toString()
 
-            if (email == "user@example.com" && password == "password") {
+            if ((email == "user@example.com" || email == "user1@example.com") && password == "password") {
                 Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, SubstationActivity::class.java)
+                // Pass the username (derived from email) to the next activity
+                val userName = email.substringBefore("@")
+                intent.putExtra("userName", userName)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()

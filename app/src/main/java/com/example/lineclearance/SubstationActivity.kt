@@ -15,6 +15,8 @@ class SubstationActivity : AppCompatActivity() {
         binding = ActivitySubstationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val userName = intent.getStringExtra("userName") ?: ""
+
         binding.substationRecyclerview.layoutManager = LinearLayoutManager(this)
 
         val substations = listOf(
@@ -26,14 +28,20 @@ class SubstationActivity : AppCompatActivity() {
             Substation("UPLETA"),
             Substation("TANASAVA"),
             Substation("KALANA"),
-            Substation("MURAKHADA")
+            Substation("MURAKHAI")
         )
 
         val adapter = SubstationAdapter(substations) { substation ->
             val intent = Intent(this, FeederActivity::class.java)
             intent.putExtra("substationName", substation.name)
+            intent.putExtra("userName", userName)
             startActivity(intent)
         }
         binding.substationRecyclerview.adapter = adapter
+
+        binding.dashboardButton.setOnClickListener {
+            val intent = Intent(this, DashboardActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing! We welcome contributions from everyone.
 
+Please read our `CODE_OF_CONDUCT.md` to understand the standards we expect from contributors.
+
 ## 🎯 How to Contribute
 
 ### Reporting Bugs
@@ -37,6 +39,22 @@ Thank you for your interest in contributing! We welcome contributions from every
     git commit -m "feat: Describe your new feature"
     ```
 6.  **Push and Create a Pull Request** against the `main` branch of the original repository.
+
+### Pull Request checklist
+
+- Ensure CI passes on your branch
+- Keep changes small and focused
+- Add or update tests for new functionality
+- Update documentation where applicable
+
+### Running CI locally
+
+You can run the same commands locally that CI uses:
+
+```bash
+./gradlew build
+./gradlew test
+```
 
 ## 🏗️ Development Setup
 

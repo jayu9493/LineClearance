@@ -1,6 +1,8 @@
 # LineClearance Android App
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/jayu9493/LineClearance/actions/workflows/android-ci.yml/badge.svg)](https://github.com/jayu9493/LineClearance/actions/workflows/android-ci.yml)
+[![Dependabot Status](https://github.com/jayu9493/LineClearance/security/dependabot)](https://github.com/jayu9493/LineClearance/security/dependabot)
 
 A native Android application designed to streamline the process of requesting line clearance permits via SMS.
 
@@ -50,6 +52,15 @@ This project follows standard Kotlin conventions for Android.
 - `SubstationActivity.kt` / `FeederActivity.kt`: Main screens for selection.
 - `app/src/main/res/layout/`: XML layout files for all activities.
 - `app/build.gradle.kts`: Project dependencies.
+
+### Build & Test (CLI)
+
+If you prefer the command line, you can build and run tests with the Gradle wrapper:
+
+```bash
+./gradlew assembleDebug
+./gradlew test
+```
 
 ## 🤝 Contributing
 
