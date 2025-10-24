@@ -1,55 +1,36 @@
 package com.example.lineclearance
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lineclearance.databinding.ActivityFeederBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class FeederActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFeederBinding
-    private lateinit var db: AppDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFeederBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        db = AppDatabase.getDatabase(this)
-
-        binding.feederRecyclerview.layoutManager = LinearLayoutManager(this)
 
         val substationName = intent.getStringExtra("substationName") ?: ""
+        val userName = intent.getStringExtra("userName") ?: ""
+
+        binding.feederRecyclerview.layoutManager = LinearLayoutManager(this)
         val feeders = getFeedersForSubstation(substationName)
         val phoneNumber = getPhoneNumberForSubstation(substationName)
 
         val adapter = FeederAdapter(feeders) { feeder ->
-            // Run the database insert on a background thread to prevent crash
-            lifecycleScope.launch(Dispatchers.IO) {
-                val permit = LineClearancePermit(
-                    feederName = feeder.name,
-                    substationName = feeder.substationName,
-                    status = "Requested"
-                )
-                db.lineClearancePermitDao().insert(permit)
+            // Launch the PermitDetailsActivity instead of directly sending SMS
+            val intent = Intent(this, PermitDetailsActivity::class.java).apply {
+                putExtra("feederName", feeder.name)
+                putExtra("substationName", substationName)
+                putExtra("userName", userName)
+                putExtra("phoneNumber", phoneNumber)
             }
-
-            // Send the SMS
-            val message = "Please give LC of ${feeder.name} feeder for the work of jumper work from S B Kuvad"
-            val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("smsto:$phoneNumber")
-                putExtra("sms_body", message)
-            }
-            if (intent.resolveActivity(packageManager) != null) {
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "No SMS app found.", Toast.LENGTH_SHORT).show()
-            }
+            startActivity(intent)
         }
         binding.feederRecyclerview.adapter = adapter
     }

@@ -7,7 +7,6 @@
     android:background="@color/pgvcl_background"
     tools:context=".MainActivity">
 
-    <!--
     <ImageView
         android:id="@+id/logo"
         android:layout_width="120dp"
@@ -15,14 +14,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:src="@drawable/pgvcl_logo" />
-    -->
 
     <TextView
         android:id="@+id/app_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="16dp"
         android:text="Line Clearance"
         android:textColor="@color/pgvcl_primary_dark"
         android:textSize="24sp"
