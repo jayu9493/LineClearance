@@ -7,8 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
 
 class DashboardActivity : ComponentActivity() {
 
@@ -40,31 +40,43 @@ class DashboardActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(permits: List<LineClearancePermit>) {
+    val confirmed = permits.filter { it.status == "Confirmed" }
+    val waiting = permits.filter { it.status == "Waiting" }
+    val rejected = permits.filter { it.status == "Rejected" }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Dashboard", color = Color.White) },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF2E7D32) // dashboard_green
-                )
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF2E7D32))
             )
         }
     ) { paddingValues ->
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .padding(8.dp)
         ) {
-            UserProfileCard()
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "Live Permits",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-            LazyColumn(modifier = Modifier.padding(8.dp)) {
-                items(permits) { permit ->
+            item { UserProfileCard() }
+
+            if (confirmed.isNotEmpty()) {
+                item { CategoryHeader("LC Confirmed") }
+                items(confirmed) { permit ->
+                    PermitCard(permit)
+                }
+            }
+
+            if (waiting.isNotEmpty()) {
+                item { CategoryHeader("LC in Waiting") }
+                items(waiting) { permit ->
+                    PermitCard(permit)
+                }
+            }
+
+            if (rejected.isNotEmpty()) {
+                item { CategoryHeader("LC Rejected") }
+                items(rejected) { permit ->
                     PermitCard(permit)
                 }
             }
@@ -73,7 +85,17 @@ fun DashboardScreen(permits: List<LineClearancePermit>) {
 }
 
 @Composable
-fun UserProfileCard() {
+fun CategoryHeader(title: String) {
+    Text(
+        text = title,
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Bold,
+        modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
+    )
+}
+
+@Composable
+fun UserProfileCard() { // ... (This is unchanged) ...
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -89,50 +111,67 @@ fun UserProfileCard() {
 
 @Composable
 fun PermitCard(permit: LineClearancePermit) {
+    var elapsedTime by remember { mutableStateOf("") }
+
+    if (permit.status == "Confirmed") {
+        LaunchedEffect(permit.timestamp) {
+            while (true) {
+                val diff = System.currentTimeMillis() - permit.timestamp
+                val hours = diff / (1000 * 60 * 60)
+                val minutes = (diff / (1000 * 60)) % 60
+                elapsedTime = String.format("%02d:%02d", hours, minutes)
+                delay(60000) // Update every minute
+            }
+        }
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(text = permit.feederName, fontSize = 16.sp, fontWeight = FontWeight.Bold)
-                Text(text = permit.substationName)
-            }
-            Column(horizontalAlignment = Alignment.End) {
-                val statusColor = when (permit.status) {
-                    "Live" -> Color(0xFF2E7D32) // dashboard_green
-                    "Requested" -> Color.Blue
-                    else -> Color.Gray
+        Column(modifier = Modifier.padding(16.dp)) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(text = permit.feederName, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "by ${permit.requesterName ?: "N/A"}")
                 }
-                Text(text = permit.status, color = statusColor, fontWeight = FontWeight.Bold)
-                Text(text = "LC #${permit.lcNumber ?: "N/A"}")
+                Column(horizontalAlignment = Alignment.End) {
+                    val statusColor = when (permit.status) {
+                        "Confirmed" -> Color(0xFF2E7D32)
+                        "Waiting" -> Color.Blue
+                        else -> Color.Gray
+                    }
+                    Text(text = permit.status, color = statusColor, fontWeight = FontWeight.Bold)
+                    if (permit.status == "Confirmed") {
+                        Text(text = "Time: $elapsedTime")
+                    }
+                }
             }
+            Text(text = "Work: ${permit.workType ?: "N/A"}", style = MaterialTheme.typography.bodySmall)
         }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    val samplePermit = LineClearancePermit(id=1, feederName = "Nani marad AG", substationName = "Patanvav", status = "Live", lcNumber = "1234")
+fun DefaultPreview() { // ... (This is unchanged) ...
+    val samplePermit = LineClearancePermit(id=1, feederName = "Nani marad AG", substationName = "Patanvav", status = "Confirmed", lcNumber = "1234", requesterName = "user", workType = "Jumper work")
     LineClearanceM3Theme {
         DashboardScreen(listOf(samplePermit))
     }
 }
 
 @Composable
-fun LineClearanceM3Theme(content: @Composable () -> Unit) {
+fun LineClearanceM3Theme(content: @Composable () -> Unit) { // ... (This is unchanged) ...
     MaterialTheme(
         colorScheme = lightColorScheme(
-            primary = Color(0xFFD81B60), // pgvcl_primary
-            secondary = Color(0xFFF8BBD0), // pgvcl_accent
-            tertiary = Color(0xFFA00037) // pgvcl_primary_dark
+            primary = Color(0xFFD81B60), 
+            secondary = Color(0xFFF8BBD0), 
+            tertiary = Color(0xFFA00037) 
         ),
         content = content
     )
 }
+

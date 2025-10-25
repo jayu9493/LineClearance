@@ -8,7 +8,10 @@ data class LineClearancePermit(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val feederName: String,
     val substationName: String,
-    var status: String, // e.g., "Requested", "Live", "Completed"
+    var status: String, // e.g., "Requested", "Confirmed", "Rejected", "Waiting"
     var lcNumber: String? = null,
-    var timestamp: Long = System.currentTimeMillis()
+    var timestamp: Long = System.currentTimeMillis(),
+    var requesterName: String? = null,
+    var workType: String? = null,
+    var approxTime: String? = null
 )

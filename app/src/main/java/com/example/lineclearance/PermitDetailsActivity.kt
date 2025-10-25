@@ -48,7 +48,11 @@ class PermitDetailsActivity : AppCompatActivity() {
                 val permit = LineClearancePermit(
                     feederName = feederName,
                     substationName = substationName,
-                    status = "Requested"
+                    status = "Waiting", // New initial status
+                    requesterName = requester,
+                    workType = workType,
+                    approxTime = time,
+                    timestamp = System.currentTimeMillis()
                 )
                 db.lineClearancePermitDao().insert(permit)
             }

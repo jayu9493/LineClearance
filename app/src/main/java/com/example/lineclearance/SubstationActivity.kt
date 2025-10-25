@@ -20,15 +20,15 @@ class SubstationActivity : AppCompatActivity() {
         binding.substationRecyclerview.layoutManager = LinearLayoutManager(this)
 
         val substations = listOf(
-            Substation("BANTIYA"),
-            Substation("BHADER"),
-            Substation("MOTIMAR"),
-            Substation("PATANVAV"),
-            Substation("LATH"),
-            Substation("UPLETA"),
-            Substation("TANASAVA"),
-            Substation("KALANA"),
-            Substation("MURAKHAI")
+            Substation("PATANAVAV S/S"),
+            Substation("MOTI MARAD S/S"),
+            Substation("LATH S/S"),
+            Substation("BHADER S/S"),
+            Substation("KALANA S/S"),
+            Substation("MURAKHADA S/S"),
+            Substation("BANTIYA S/S"),
+            Substation("TANSAVA S/S"),
+            Substation("UPALETA S/S")
         )
 
         val adapter = SubstationAdapter(substations) { substation ->

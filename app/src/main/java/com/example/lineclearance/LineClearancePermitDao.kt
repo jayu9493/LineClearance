@@ -15,7 +15,7 @@ interface LineClearancePermitDao {
     @Query("SELECT * FROM line_clearance_permits ORDER BY timestamp DESC")
     fun getAllPermits(): LiveData<List<LineClearancePermit>>
 
-    @Query("SELECT * FROM line_clearance_permits WHERE feederName = :feederName AND status = 'Requested' LIMIT 1")
+    @Query("SELECT * FROM line_clearance_permits WHERE feederName = :feederName AND status = 'Waiting' LIMIT 1")
     fun getRequestedPermitForFeeder(feederName: String): LineClearancePermit?
 
     @Query("UPDATE line_clearance_permits SET status = :status, lcNumber = :lcNumber WHERE id = :id")

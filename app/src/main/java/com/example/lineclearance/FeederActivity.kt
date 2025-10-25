@@ -23,7 +23,6 @@ class FeederActivity : AppCompatActivity() {
         val phoneNumber = getPhoneNumberForSubstation(substationName)
 
         val adapter = FeederAdapter(feeders) { feeder ->
-            // Launch the PermitDetailsActivity instead of directly sending SMS
             val intent = Intent(this, PermitDetailsActivity::class.java).apply {
                 putExtra("feederName", feeder.name)
                 putExtra("substationName", substationName)
@@ -37,30 +36,87 @@ class FeederActivity : AppCompatActivity() {
 
     private fun getPhoneNumberForSubstation(substationName: String): String { 
         return when (substationName) {
-            "PATANVAV" -> "9909975777"
-            "MOTIMAR" -> "9909975772"
-            "LATH" -> "9081600388"
-            "BHADER" -> "9081600377"
-            "KALANA" -> "8160402913"
-            "MURAKHAI" -> "9327119856"
-            "BANTIYA" -> "1111111111"
-            "UPLETA" -> "6666666666"
-            "TANASAVA" -> "7777777777"
+            "PATANAVAV S/S" -> "+919909975777"
+            "MOTI MARAD S/S" -> "+919909975772"
+            "LATH S/S" -> "+919081600388"
+            "BHADER S/S" -> "+919081600377"
+            "KALANA S/S" -> "+918160402913"
+            "MURAKHADA S/S" -> "+919327119856"
+            "BANTIYA S/S" -> "+919328620179"
+            "TANSAVA S/S" -> "+919909975775"
+            "UPALETA S/S" -> "+919909975774"
             else -> ""
         }
     }
 
     private fun getFeedersForSubstation(substationName: String): List<Feeder> {
         return when (substationName) {
-            "BANTIYA" -> listOf(Feeder("CHHATRAS", substationName), Feeder("NARAYAN", substationName))
-            "BHADER" -> listOf(Feeder("RAMDEV", substationName), Feeder("VAGHESHVARI", substationName), Feeder("MAHADEV", substationName), Feeder("SANGANI", substationName), Feeder("BHADER", substationName), Feeder("NAGNATH", substationName), Feeder("KEDAR", substationName))
-            "MOTIMAR" -> listOf(Feeder("VADODAR", substationName), Feeder("CHIKHALIA", substationName), Feeder("BHADAJALI", substationName), Feeder("RANDAL", substationName), Feeder("NAGALKHA", substationName), Feeder("MARUTI", substationName))
-            "PATANVAV" -> listOf(Feeder("KALANA", substationName), Feeder("VELARIA", substationName), Feeder("CHICHOD", substationName), Feeder("NANI MAR", substationName), Feeder("TALANGAN", substationName), Feeder("PATANVAV", substationName), Feeder("CHUDVA RI", substationName), Feeder("OSAM", substationName), Feeder("MAJETHI", substationName), Feeder("PATANVAV SST", substationName))
-            "LATH" -> listOf(Feeder("LATH", substationName), Feeder("BHADER", substationName), Feeder("KUNDHECH", substationName), Feeder("TRIVENI", substationName), Feeder("LATH AUX SST", substationName))
-            "UPLETA" -> listOf(Feeder("HADFODI", substationName), Feeder("AAKASH", substationName))
-            "TANASAVA" -> listOf(Feeder("NILAKHA", substationName), Feeder("DHARTI", substationName))
-            "KALANA" -> listOf(Feeder("KALESHWA", substationName), Feeder("VAGADIYA", substationName), Feeder("PATI", substationName), Feeder("KARAR", substationName), Feeder("HINGLAJ", substationName), Feeder("KALANA SS SST", substationName), Feeder("SANGAM", substationName), Feeder("SAVAI", substationName))
-            "MURAKHAI" -> listOf(Feeder("SURAJ", substationName), Feeder("URJA", substationName), Feeder("RUDRA", substationName))
+            "PATANAVAV S/S" -> listOf(
+                Feeder("OSAM JGY", substationName),
+                Feeder("CHICHOD JGY", substationName),
+                Feeder("PATANVAV AG", substationName),
+                Feeder("CHUDAVA AG", substationName),
+                Feeder("TALNGANA AG", substationName),
+                Feeder("MAJETHI AG", substationName),
+                Feeder("NANI MARAD AG", substationName),
+                Feeder("KALANA AG", substationName),
+                Feeder("VELARIYA AG", substationName),
+                Feeder("ONEX SOLAR", substationName)
+            )
+            "MOTI MARAD S/S" -> listOf(
+                Feeder("RANDAL JGY", substationName),
+                Feeder("CHIKHALIYA AG", substationName),
+                Feeder("BHADA JALIYA AG", substationName),
+                Feeder("VADODAR AG", substationName),
+                Feeder("UDAKIYA AG", substationName),
+                Feeder("CHHADVA VADAR AG", substationName),
+                Feeder("BHOLA AG", substationName),
+                Feeder("SUKHNATH AG", substationName),
+                Feeder("MARUTI AG", substationName),
+                Feeder("NAGALKHADA AG", substationName)
+            )
+            "LATH S/S" -> listOf(
+                Feeder("KUNDHECH JGY", substationName),
+                Feeder("BHADAR AG", substationName),
+                Feeder("LATHA AG", substationName),
+                Feeder("TRIVENI AG", substationName),
+                Feeder("SANGAM AG", substationName)
+            )
+            "BHADER S/S" -> listOf(
+                Feeder("RAMDEV JGY", substationName),
+                Feeder("KEDAR AG", substationName),
+                Feeder("NAGNATH AG", substationName),
+                Feeder("SANGANI AG", substationName),
+                Feeder("VAGHESHWARI AG", substationName),
+                Feeder("AMBALIYA AG", substationName),
+                Feeder("MAHADEV AG", substationName)
+            )
+            "KALANA S/S" -> listOf(
+                Feeder("KALESHWAR JGY", substationName),
+                Feeder("HINGALAJ AG", substationName),
+                Feeder("KARAAR AG", substationName),
+                Feeder("VAGADIYA AG", substationName),
+                Feeder("PATI AG", substationName),
+                Feeder("SAVAJ AG", substationName),
+                Feeder("MEGNETIK SOLAR", substationName)
+            )
+            "MURAKHADA S/S" -> listOf(
+                Feeder("URJA JGY", substationName),
+                Feeder("SURAJ JGY", substationName),
+                Feeder("RUDR AG", substationName)
+            )
+            "BANTIYA S/S" -> listOf(
+                Feeder("NARAYAN AG", substationName),
+                Feeder("CHHATRASA AG", substationName)
+            )
+            "TANSAVA S/S" -> listOf(
+                Feeder("NILAKHA JGY", substationName),
+                Feeder("DHARATI AG", substationName),
+                Feeder("AKASH AG", substationName)
+            )
+            "UPALETA S/S" -> listOf(
+                Feeder("HADFODI AG", substationName)
+            )
             else -> emptyList()
         }
     }
