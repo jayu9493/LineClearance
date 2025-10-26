@@ -49,6 +49,8 @@ fun DashboardScreen(permits: List<LineClearancePermit>) {
     val confirmed = permits.filter { it.status == "Confirmed" }
     val waiting = permits.filter { it.status == "Waiting" }
     val rejected = permits.filter { it.status == "Rejected" }
+    val completed = permits.filter { it.status == "Completed" }
+
     var showDialog by remember { mutableStateOf(false) }
     var selectedPermit by remember { mutableStateOf<LineClearancePermit?>(null) }
 
@@ -91,9 +93,9 @@ fun DashboardScreen(permits: List<LineClearancePermit>) {
                 }
             }
 
-            if (rejected.isNotEmpty()) {
-                item { CategoryHeader("LC Rejected") }
-                items(rejected) { permit ->
+            if (completed.isNotEmpty()) {
+                item { CategoryHeader("Completed LCs") }
+                items(completed) { permit ->
                     PermitCard(permit = permit, onClick = {})
                 }
             }
@@ -132,9 +134,7 @@ fun ReturnLcDialog(permit: LineClearancePermit, onDismiss: () -> Unit, onConfirm
             }
         },
         dismissButton = {
-            Button(onClick = onDismiss) {
-                Text("Cancel")
-            }
+            Button(onClick = onDismiss) { Text("Cancel") }
         }
     )
 }
@@ -185,7 +185,8 @@ fun PermitCard(permit: LineClearancePermit, onClick: () -> Unit) {
             .fillMaxWidth()
             .padding(vertical = 4.dp, horizontal = 8.dp)
             .clickable(enabled = permit.status == "Confirmed", onClick = onClick),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = if (permit.status == "Completed") CardDefaults.cardColors(containerColor = Color.LightGray) else CardDefaults.cardColors()
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
@@ -197,6 +198,7 @@ fun PermitCard(permit: LineClearancePermit, onClick: () -> Unit) {
                     val statusColor = when (permit.status) {
                         "Confirmed" -> Color(0xFF2E7D32)
                         "Waiting" -> Color.Blue
+                        "Completed" -> Color.DarkGray
                         else -> Color.Gray
                     }
                     Text(text = permit.status, color = statusColor, fontWeight = FontWeight.Bold)
@@ -206,6 +208,16 @@ fun PermitCard(permit: LineClearancePermit, onClick: () -> Unit) {
                 }
             }
             Text(text = "Work: ${permit.workType ?: "N/A"}", style = MaterialTheme.typography.bodySmall)
+            
+            // New section to display location
+            if (permit.latitude != null && permit.longitude != null) {
+                Text(
+                    text = "Location: ${String.format("%.4f", permit.latitude)}, ${String.format("%.4f", permit.longitude)}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = Color.Gray,
+                    modifier = Modifier.padding(top = 4.dp)
+                )
+            }
         }
     }
 }
@@ -213,20 +225,9 @@ fun PermitCard(permit: LineClearancePermit, onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    val samplePermit = LineClearancePermit(id=1, feederName = "Nani marad AG", substationName = "Patanvav", status = "Confirmed", lcNumber = "1234", requesterName = "user", workType = "Jumper work")
+    val samplePermit = LineClearancePermit(id=1, feederName = "Nani marad AG", substationName = "Patanvav", status = "Confirmed", lcNumber = "1234", requesterName = "user", workType = "Jumper work", latitude = 21.1234, longitude = 70.5678)
     LineClearanceM3Theme {
         DashboardScreen(listOf(samplePermit))
     }
 }
 
-@Composable
-fun LineClearanceM3Theme(content: @Composable () -> Unit) {
-    MaterialTheme(
-        colorScheme = lightColorScheme(
-            primary = Color(0xFFD81B60), 
-            secondary = Color(0xFFF8BBD0), 
-            tertiary = Color(0xFFA00037) 
-        ),
-        content = content
-    )
-}

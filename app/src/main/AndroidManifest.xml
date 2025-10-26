@@ -6,6 +6,8 @@
         tools:ignore="SmsAndCallLogPolicy" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <queries>
         <intent>
@@ -34,17 +36,16 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true"
-            android:theme="@style/Theme.LineClearance">
+            android:exported="false"
+            android:theme="@style/Theme.LineClearance" />
+        <activity
+            android:name=".SubstationActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SubstationActivity"
-            android:exported="false" />
         <activity
             android:name=".FeederActivity"
             android:exported="false" />

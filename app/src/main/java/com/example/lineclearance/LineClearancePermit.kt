@@ -14,5 +14,7 @@ data class LineClearancePermit(
     var requesterName: String? = null,
     var workType: String? = null,
     var approxTime: String? = null,
-    var confirmationSmsBody: String? = null // New field to store the confirmation SMS
+    var confirmationSmsBody: String? = null,
+    var latitude: Double? = null, // New field for location
+    var longitude: Double? = null // New field for location
 )
