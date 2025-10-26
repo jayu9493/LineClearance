@@ -13,5 +13,6 @@ data class LineClearancePermit(
     var timestamp: Long = System.currentTimeMillis(),
     var requesterName: String? = null,
     var workType: String? = null,
-    var approxTime: String? = null
+    var approxTime: String? = null,
+    var confirmationSmsBody: String? = null // New field to store the confirmation SMS
 )
