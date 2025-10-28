@@ -36,16 +36,16 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.LineClearance" />
-        <activity
-            android:name=".SubstationActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.LineClearance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SubstationActivity"
+            android:exported="false" />
         <activity
             android:name=".FeederActivity"
             android:exported="false" />
@@ -54,6 +54,9 @@
             android:exported="false" />
         <activity
             android:name=".PermitDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PersonalDashboardActivity"
             android:exported="false" />
     </application>
 

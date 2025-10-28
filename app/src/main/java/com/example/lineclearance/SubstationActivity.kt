@@ -39,8 +39,10 @@ class SubstationActivity : AppCompatActivity() {
         }
         binding.substationRecyclerview.adapter = adapter
 
+        // Correctly open the PersonalDashboardActivity
         binding.dashboardButton.setOnClickListener {
-            val intent = Intent(this, DashboardActivity::class.java)
+            val intent = Intent(this, PersonalDashboardActivity::class.java)
+            intent.putExtra("userName", userName)
             startActivity(intent)
         }
     }

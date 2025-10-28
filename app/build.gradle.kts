@@ -62,6 +62,10 @@ dependencies {
     implementation("androidx.room:room-ktx:2.5.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
 
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+
     // Google Play Services Location
     implementation("com.google.android.gms:play-services-location:21.0.1")
 

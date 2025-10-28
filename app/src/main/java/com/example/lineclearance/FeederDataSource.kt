@@ -4,7 +4,7 @@ object FeederDataSource {
 
     fun getAllFeederNames(): List<String> {
         return listOf(
-            "OSAM JGY", "CHICHOD JGY", "PATANVAV AG", "CHUDAVA AG", "TALNGANA AG",
+            "OSAM JGY", "CHICHOD JGY", "PATANVAV AG", "CHUDAVA AG", "TALANGANA AG",
             "MAJETHI AG", "NANI MARAD AG", "KALANA AG", "VELARIYA AG", "ONEX SOLAR",
             "RANDAL JGY", "CHIKHALIYA AG", "BHADA JALIYA AG", "VADODAR AG", "UDAKIYA AG",
             "CHHADVA VADAR AG", "BHOLA AG", "SUKHNATH AG", "MARUTI AG", "NAGALKHADA AG",
@@ -27,7 +27,7 @@ object FeederDataSource {
                 Feeder("CHICHOD JGY", substationName),
                 Feeder("PATANVAV AG", substationName),
                 Feeder("CHUDAVA AG", substationName),
-                Feeder("TALNGANA AG", substationName),
+                Feeder("TALANGANA AG", substationName),
                 Feeder("MAJETHI AG", substationName),
                 Feeder("NANI MARAD AG", substationName),
                 Feeder("KALANA AG", substationName),
